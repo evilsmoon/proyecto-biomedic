@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  app:
+    build: 
+      context: ./app
+      dockerfile: Dockerfile
+    volumes:
+      - ./app/src:/var/www/html/
+    ports:
+      - 8090:80
+    depends_on:
+      - db
+  db:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: MYSQL_ROOT_PASSWORD
+      MYSQL_DATABASE: MY_DATABASE
+      MYSQL_USER: MYSQL_USER
+      MYSQL_PASSWORD: MYSQL_PASSWORD
+    ports:
+      - 3306:3306
+  phpmyadmin:
+    image: phpmyadmin:latest
+    restart: always
+    depends_on: 
+      - db
+    ports:
+      - 8081:80
+    environment:
+      PMA_HOST: db
