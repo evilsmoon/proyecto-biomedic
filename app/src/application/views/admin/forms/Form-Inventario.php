@@ -1,5 +1,5 @@
 <div class="modal fade" id="modal-inventario">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-lg">
           <div class="modal-content">
               <div class="modal-header">
                   <h4 class="modal-title" id="title-formulario">Agregar Equipo</h4>
@@ -8,7 +8,7 @@
                   </button>
               </div>
               <div class="modal-body">
-                  <form method="post" id="formulario" action="<?php echo base_url('Admin/agregar'); ?>">
+                  <form method="post" id="form-inventario" action="<?php echo base_url('Admin/agregar'); ?>">
                       <div class="row">
                           <input type="text" id="id" name="id" hidden>
 

@@ -37,6 +37,7 @@ class Admin extends CI_Controller
         $this->load->view('templates/home/Sidebar');
         $this->load->view('Admin/Inventario', $data);
         $this->load->view('Admin/forms/Form-Inventario');
+        $this->load->view('Admin/forms/Form-Formulario');
         $this->load->view('templates/home/Footer');
     }
 
@@ -76,20 +77,21 @@ class Admin extends CI_Controller
                 'anio_fabricacion' => $this->input->post('anio_fabricacion')
             );
 
-            $res = $this->M_Admin->actualizarEquipo($id,$data);
+            $res = $this->M_Admin->actualizarEquipo($id, $data);
             redirect('Admin/inventario');
-        } 
+        }
         redirect('Admin/inventario');
     }
 
-    public function eliminar() {
+    public function eliminar()
+    {
         if ($this->input->server('REQUEST_METHOD') === 'GET') {
             $id = $this->input->get('id');
 
             $res = $this->M_Admin->eliminarEquipo($id);
 
             echo $res;
-        } 
+        }
         redirect('Admin/inventario');
     }
 
@@ -100,6 +102,80 @@ class Admin extends CI_Controller
             $equipo = $this->M_Admin->obtenerEquipoPorId($id);
             header('Content-Type: application/json');
             echo json_encode($equipo);
-        } 
+        }
+    }
+
+    public function detallesFormulario()
+    {
+        if ($this->input->server('REQUEST_METHOD') === 'GET') {
+           
+            $id = $this->input->get('id');
+            $detalles = $this->M_Admin->obtenerDetallesEquiposFormulario($id);
+            header('Content-Type: application/json');
+            echo json_encode($detalles);
+        }
+    }
+
+    public function agregarEquipoFormulario()
+    {
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+           
+            $idEquipo = $this->input->post('idEquipo');
+
+            $arrayRespuestas = array();
+
+            $p_1_1_1   = array("id" => '1-1-1', "value" => $this->input->post('1-1-1'));
+            $arrayRespuestas[] = $p_1_1_1;
+            $p_1_1_2   = array("id" => '1-1-2', "value" => $this->input->post('1-1-2'));
+            $arrayRespuestas[] = $p_1_1_2;
+            $p_1_1_3   = array("id" => '1-1-3', "value" => $this->input->post('1-1-3'));
+            $arrayRespuestas[] = $p_1_1_3;
+            $p_1_2_1   = array("id" => '1-2-1', "value" => $this->input->post('1-2-1'));
+            $arrayRespuestas[] = $p_1_2_1;
+            $p_1_2_2   = array("id" => '1-2-2', "value" => $this->input->post('1-2-2'));
+            $arrayRespuestas[] = $p_1_2_2;
+            $p_1_3_1   = array("id" => '1-3-1', "value" => $this->input->post('1-3-1'));
+            $arrayRespuestas[] = $p_1_3_1;
+            $p_1_3_2   = array("id" => '1-3-2', "value" => $this->input->post('1-3-2'));
+            $arrayRespuestas[] = $p_1_3_2;
+            $p_1_3_3   = array("id" => '1-3-3', "value" => $this->input->post('1-3-3'));
+            $arrayRespuestas[] = $p_1_3_3;
+            $p_1_4_1   = array("id" => '1-4-1', "value" => $this->input->post('1-4-1'));
+            $arrayRespuestas[] = $p_1_4_1;
+
+            $p_2_1   = array("id"=>'2-1','value'=> $this->input->post('2-1'));
+            $arrayRespuestas[] = $p_2_1;
+            $p_2_2   = array("id"=>'2-2','value'=> $this->input->post('2-2'));
+            $arrayRespuestas[] = $p_2_2;
+            $p_2_3   = array("id"=>'2-3','value'=> $this->input->post('2-3'));
+            $arrayRespuestas[] = $p_2_3;
+            $p_2_4   = array("id"=>'2-4','value'=> $this->input->post('2-4'));
+            $arrayRespuestas[] = $p_2_4;
+            $p_2_5   = array("id"=>'2-5','value'=> $this->input->post('2-5'));
+            $arrayRespuestas[] = $p_2_5; 
+
+            foreach ($arrayRespuestas as $objeto) {
+                $id = $objeto['id'];
+                $value = $objeto['value'];
+                $idSinGuiones = str_replace('-', '', $id);
+                $numeros = str_split($idSinGuiones);
+
+                $res ='';
+                if (isset($numeros[2])) {
+                    $res = $this->M_Admin->buscarRegistro($numeros[0], $numeros[1], $numeros[2]);
+                }else{
+                    $res = $this->M_Admin->buscarRegistro($numeros[0], $numeros[1]);
+                }
+        
+                $this->M_Admin->crearActualizarEquipoFormulario($idEquipo,$res,$value);
+
+            } 
+        }
+        redirect('Admin/inventario');
     }
 }
+
+
+	
+	
+	
