@@ -15,9 +15,9 @@ class Login extends CI_Controller
         if (!file_exists(APPPATH . 'views/' . $page . '.php')) {
             show_404();
         } else {
-            $this->load->view('templates/home/header');
+            $this->load->view('admin/templates/header');
             $this->load->view('Login');
-            $this->load->view('templates/home/footer');
+            $this->load->view('admin/templates/footer');
         }
     }
 

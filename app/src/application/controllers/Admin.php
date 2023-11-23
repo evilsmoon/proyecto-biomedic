@@ -21,25 +21,17 @@ class Admin extends CI_Controller
         if (!file_exists(APPPATH . 'views/' . $page . '.php')) {
             show_404();
         } else {
-            $this->load->view('templates/home/Header');
-            $this->load->view('templates/home/Navbar');
-            $this->load->view('templates/home/Sidebar');
-            $this->load->view('Admin');
-            $this->load->view('templates/home/Footer');
+            $data['equipos'] = $this->M_Admin->obtenerEquipos();
+            $this->load->view('admin/templates/Header');
+            $this->load->view('admin/templates/Navbar');
+            $this->load->view('admin/templates/Sidebar');
+            $this->load->view('admin/Home', $data);
+            $this->load->view('admin/forms/Form-Inventario');
+            $this->load->view('admin/forms/Form-Formulario');
+            $this->load->view('admin/templates/Footer');
         }
     }
 
-    public function inventario()
-    {
-        $data['equipos'] = $this->M_Admin->obtenerEquipos();
-        $this->load->view('templates/home/Header');
-        $this->load->view('templates/home/Navbar');
-        $this->load->view('templates/home/Sidebar');
-        $this->load->view('Admin/Inventario', $data);
-        $this->load->view('Admin/forms/Form-Inventario');
-        $this->load->view('Admin/forms/Form-Formulario');
-        $this->load->view('templates/home/Footer');
-    }
 
     public function agregar()
     {
@@ -57,7 +49,7 @@ class Admin extends CI_Controller
 
             $this->M_Admin->insertarEquipo($data);
         }
-        redirect('Admin/inventario');
+        redirect('Admin');
     }
 
 
@@ -78,9 +70,9 @@ class Admin extends CI_Controller
             );
 
             $res = $this->M_Admin->actualizarEquipo($id, $data);
-            redirect('Admin/inventario');
+            redirect('Admin');
         }
-        redirect('Admin/inventario');
+        redirect('Admin');
     }
 
     public function eliminar()
@@ -92,7 +84,7 @@ class Admin extends CI_Controller
 
             echo $res;
         }
-        redirect('Admin/inventario');
+        redirect('Admin');
     }
 
     public function obtenerEquipo()
@@ -171,7 +163,16 @@ class Admin extends CI_Controller
 
             } 
         }
-        redirect('Admin/inventario');
+        redirect('Admin');
+    }
+
+    public function usuarios() {
+        $data['usuarios'] = $this->M_Admin->obtenerUsuarios();
+        $this->load->view('admin/templates/Header');
+        $this->load->view('admin/templates/Navbar');
+        $this->load->view('admin/templates/Sidebar');
+        $this->load->view('admin/Usuarios.php', $data);
+        $this->load->view('admin/templates/Footer');
     }
 }
 

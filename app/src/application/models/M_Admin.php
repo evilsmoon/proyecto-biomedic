@@ -111,4 +111,17 @@ class M_Admin extends CI_Model
             $this->db->insert('equipos_formulario', $data);
         }
     }
+
+    /* 
+        ? Usuarios  
+    */
+
+    public function obtenerUsuarios() {
+        $this->db->select('Usuarios.*, Perfiles.nombre as perfil');
+        $this->db->from('Usuarios');
+        $this->db->join('Perfiles', 'Perfiles.id = Usuarios.id_perfil ');
+        $query = $this->db->get();
+        return $query->result();
+    }
+    
 }

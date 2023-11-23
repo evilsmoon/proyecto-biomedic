@@ -61,6 +61,23 @@
     }]
   });
 
+  
+  $('#usuarios').DataTable({
+    paging: true,
+    lengthChange: false,
+    searching: true,
+    ordering: true,
+    info: true,
+    autoWidth: true,
+    responsive: true,
+    select: true,
+    columnDefs: [{
+      data: null,
+      defaultContent: "<a class='fas text-primary fa-edit editar-equipo'></a><a class='fas text-primary fa-trash eliminar-equipo'></a><a class='fas text-primary fa-file formulario-equipo'></a>",
+      targets: -1
+    }]
+  });
+
   table.on('click', '.editar-equipo', function(e) {
     let dataTable = table.row(e.target.closest('tr')).data();
     $.ajax({

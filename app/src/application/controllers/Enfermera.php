@@ -7,11 +7,7 @@ class Enfermera extends CI_Controller
     {
 
         parent::__construct();
-        echo $this->session->userdata('Role');
-        echo $this->session->userdata('Login');
-        echo base_url();
-        
-        if (!$this->session->userdata("Login") && $this->session->userdata('Role') === 'Enfermera') {
+        if ($this->session->userdata('Role') !== 'Enfermera') {
 
             redirect(base_url());
         }
@@ -24,9 +20,24 @@ class Enfermera extends CI_Controller
         if (!file_exists(APPPATH . 'views/' . $page . '.php')) {
             show_404();
         } else {
-            $this->load->view('templates/home/header');
-            $this->load->view('Enfermera');
-            $this->load->view('templates/home/footer');
+            $data['equipos'] = $this->M_Enfermera->obtenerEquipos();
+            $this->load->view('nurse/templates/Header');
+            $this->load->view('nurse/templates/Navbar');
+            $this->load->view('nurse/templates/Sidebar');
+            $this->load->view('nurse/Home',$data);
+            $this->load->view('nurse/forms/Form-Formulario');
+            $this->load->view('nurse/forms/Form-Solicitud');
+            $this->load->view('nurse/templates/Footer');
+        }
+    }
+    public function detallesFormulario()
+    {
+        if ($this->input->server('REQUEST_METHOD') === 'GET') {
+           
+            $id = $this->input->get('id');
+            $detalles = $this->M_Enfermera->obtenerDetallesEquiposFormulario($id);
+            header('Content-Type: application/json');
+            echo json_encode($detalles);
         }
     }
 
