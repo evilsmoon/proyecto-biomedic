@@ -4,6 +4,7 @@ services:
     build: 
       context: ./app
       dockerfile: Dockerfile
+    working_dir: /var/www/html/
     volumes:
       - ./app/src:/var/www/html/
     ports:

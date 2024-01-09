@@ -20,11 +20,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <!--                           <div class="card-header">
-                              <a class="btn btn-app" type="button" id="btn-modal">
-                                  <i class="fas fa-plus"></i> Nuevo
-                              </a>
-                          </div> -->
+                        <div class="card-header">
+                            <a class="btn btn-app" type="button" id="btn-usuario">
+                                <i class="fas fa-user-plus "></i> Crear Usuario
+                            </a>
+                        </div>
                         <div class="card-body">
                             <table id="usuarios" class="table table-bordered table-hover">
                                 <thead>

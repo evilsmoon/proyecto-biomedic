@@ -1,9 +1,11 @@
 </div>
+
 <!-- ./wrapper -->
 <!-- JQuery -->
 <script type="text/javascript" src="<?php echo base_url('assets/js/jquery.min.js'); ?>"></script>
 <!-- Bootstrap core JavaScript -->
 <script type="text/javascript" src="<?php echo base_url('assets/js/bootstrap.bundle.min.js'); ?>"></script>
+
 <!-- DataTables -->
 <script type="text/javascript" src="<?php echo base_url('assets/js/jquery.dataTables.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/js/dataTables.bootstrap4.min.js'); ?>"></script>
@@ -11,8 +13,12 @@
 <script type="text/javascript" src="<?php echo base_url('assets/js/responsive.bootstrap4.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/js/dataTables.buttons.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/js/buttons.bootstrap4.min.js'); ?>"></script>
+<!-- overlayScrollbars -->
+<script type="text/javascript" src="<?php echo base_url('assets/js/jquery.overlayScrollbars.min.js'); ?>"></script>
 <!-- Adminlte core JavaScript -->
 <script type="text/javascript" src="<?php echo base_url('assets/js/adminlte.min.js'); ?>"></script>
+
+
 <!-- Autenticacion -->
 <script type="text/javascript" src="<?php echo base_url('assets/js/autenticacion.js'); ?>"></script>
 
@@ -61,23 +67,6 @@
     }]
   });
 
-  
-  $('#usuarios').DataTable({
-    paging: true,
-    lengthChange: false,
-    searching: true,
-    ordering: true,
-    info: true,
-    autoWidth: true,
-    responsive: true,
-    select: true,
-    columnDefs: [{
-      data: null,
-      defaultContent: "<a class='fas text-primary fa-edit editar-equipo'></a><a class='fas text-primary fa-trash eliminar-equipo'></a><a class='fas text-primary fa-file formulario-equipo'></a>",
-      targets: -1
-    }]
-  });
-
   table.on('click', '.editar-equipo', function(e) {
     let dataTable = table.row(e.target.closest('tr')).data();
     $.ajax({
@@ -92,16 +81,15 @@
         $('#title-formulario').html("Editar Equipo")
         // Llenar el formulario con los datos obtenidos
         $('#id').val(data.id)
-        $('#ubicacion').val(data.ubicacion)
-        $('#numero_inventario').val(data.numero_inventario)
-        $('#marca').val(data.marca)
-        $('#modelo').val(data.modelo)
-        $('#serie').val(data.serie)
-        $('#datos_fabricante').val(data.datos_fabricante)
-        $('#datos_proveedor').val(data.datos_proveedor)
-        $('#anio_fabricacion').val(data.anio_fabricacion)
+        $('#numero_inventario').val(data.numero_inventario);
+        $('#ubicacion').val(data.ubicacion);
+        $('#marca').val(data.marca);
+        $('#modelo').val(data.modelo);
+        $('#area').val(data.area);
+        $('#nombre_equipo').val(data.nombre_equipo);
+        $('#serie').val(data.serie);
+        $('#funcionaliad').val(data.funcionaliad);
 
-        // $('#formEditarEquipo').html(data);
       },
       error: function(error) {
         console.log('Error al obtener datos del equipo:', error);
@@ -120,8 +108,13 @@
       },
       success: function(data) {
         console.log(data);
+        var role = '<?php echo $this->session->userdata('Role'); ?>';
+        if (role == 'Administrador') {
+          window.location.href = 'Admin';
+        } else {
+          window.location.href = 'Doctor';
+        }
 
-        // $('#formEditarEquipo').html(data);
       },
       error: function(error) {
         console.log('Error al obtener datos del equipo:', error);
@@ -132,43 +125,33 @@
   table.on('click', '.formulario-equipo', function(e) {
 
     let dataTable = table.row(e.target.closest('tr')).data();
-
+    $('#idEquipo').val(dataTable[0]);
+    $('#modal-formulario').modal('show');
     $.ajax({
       type: 'GET',
-      url: '/Admin/detallesFormulario',
+      url: '/Admin/obtener_formulario_equipo',
       data: {
         id: dataTable[0]
       },
       success: function(data) {
-
-        $('#idEquipo').val(dataTable[0]);
-        if (data.length !== 0) {
-          data.forEach(function(detallesFormulario) {
-            // Obtenemos los datos del JSON
-            var id_padre = detallesFormulario.id_padre;
-            var id_categoria = detallesFormulario.id_categoria;
-            var id_subcategoria = detallesFormulario.id_subcategoria;
-            var puntuacion = detallesFormulario.puntuacion;
-            // Construimos el selector para encontrar el campo de puntuación correspondiente
-            var selector = '';
-            if (id_subcategoria) {
-              selector = `#${id_padre}-${id_categoria}-${id_subcategoria}`;
-            } else {
-              selector = `#${id_padre}-${id_categoria}`;
-            }
-            // Actualizamos el valor del campo de puntuación con el valor recibido
-            $(selector).val(puntuacion).removeClass('is-invalid').addClass('is-valid');
-
-          });
+        console.log(data);
+        var resp = JSON.parse(data);
+        console.log(resp);
+        if (resp) {
+          $('#nivel_riesgpo').val(resp.indice_pre_RF);
+          $('#funcion_equipo').val(resp.indice_pre_FE);
+          $('#requisitos_mantenimiento').val(resp.indice_pre_RM);
+          $('#tipo_desgaste').val(resp.indice_pre_DM);
+          $('#frecuencia_uso').val(resp.indice_pre_FU);
+          $('#averias_equipo').val(resp.indice_pre_AE);
         } else {
-          let preguntasCrear = ['#1-1-1', '#1-1-2', '#1-1-3', '#1-2-1', '#1-2-2', '#1-3-1', '#1-3-2', '#1-3-3', '#1-4-1', '#2-1', '#2-2', '#2-3', '#2-4', '#2-5']
-          preguntasCrear .forEach(function(e) {
-            $(e).val('').removeClass('is-valid').addClass('is-invalid');
-          })
-
+          $('#nivel_riesgpo').val('');
+          $('#funcion_equipo').val('');
+          $('#requisitos_mantenimiento').val('');
+          $('#tipo_desgaste').val('');
+          $('#frecuencia_uso').val('');
+          $('#averias_equipo').val('');
         }
-
-        $('#modal-formulario').modal('show');
 
       },
       error: function(error) {
@@ -177,8 +160,193 @@
     });
 
   });
-</script>
 
+  /* 
+    ! Usuarios 
+  */
+  var tablaUsuarios = $('#usuarios').DataTable({
+    paging: true,
+    lengthChange: false,
+    searching: true,
+    ordering: true,
+    info: true,
+    autoWidth: true,
+    responsive: true,
+    select: true,
+    columnDefs: [{
+      data: null,
+      defaultContent: "<a class='fas text-primary fa-edit editar-usuario'></a><a class='fas text-primary fa-trash eliminar-usuario'>",
+      targets: -1
+    }]
+  });
+
+  tablaUsuarios.on('click', '.editar-usuario', function(e) {
+    let dataTable = tablaUsuarios.row(e.target.closest('tr')).data();
+    console.log(dataTable);
+    $.ajax({
+      type: 'GET',
+      url: '/Admin/obtenerUsuario',
+      data: {
+        id: dataTable[0]
+      },
+      success: function(data) {
+        console.log(data);
+        if (data) {
+          var jsonObj = JSON.parse(data);
+          $('#id').val(jsonObj.id)
+
+          $('#nombre').val(jsonObj.nombre)
+          $('#apellido').val(jsonObj.apellido)
+          $('#email').val(jsonObj.email)
+          $('#clave').val(jsonObj.clave)
+          $('#perfil').val(jsonObj.id_perfil)
+          $('#modal-usuario').modal('show');
+          $('#form-usuario').attr('action', '<?php echo base_url('Admin/editar_usuario'); ?>');
+          $('#title-formulario-usuario').html("Editar Equipo")
+        }
+
+
+      },
+      error: function(error) {
+        console.log('Error al obtener datos del equipo:', error);
+      }
+    });
+
+  });
+
+  tablaUsuarios.on('click', '.eliminar-usuario', function(e) {
+    let dataTable = tablaUsuarios.row(e.target.closest('tr')).data();
+    console.log(dataTable);
+    $.ajax({
+      type: 'GET',
+      url: '/Admin/eliminar_usuario',
+      data: {
+        id: dataTable[0]
+      },
+      success: function(data) {
+        console.log(data);
+
+        // $('#formEditarEquipo').html(data);
+      },
+      error: function(error) {
+        console.log('Error al obtener datos del equipo:', error);
+      }
+    });
+
+  });
+
+  $('#btn-usuario').on('click', function(e) {
+    $('#modal-usuario').modal('show');
+    $('#title-formulario-usuario').html("Agregar Usuario")
+    $('#form-inventario').attr('action', '<?php echo base_url('Admin/agregar'); ?>');
+    $('#ubicacion').val('')
+    $('#numero_inventario').val('')
+    $('#marca').val('')
+    $('#modelo').val('')
+    $('#serie').val('')
+    $('#datos_fabricante').val('')
+    $('#datos_proveedor').val('')
+    $('#anio_fabricacion').val('')
+  })
+
+  /* 
+  ? Asignacion de trabajo 
+  */
+
+  var tableAsignar = $('#solicitudes').DataTable({
+    "paging": true,
+    "lengthChange": false,
+    "searching": true,
+    "ordering": true,
+    "info": true,
+    "autoWidth": false,
+    "responsive": true,
+  });
+  tableAsignar.on('click', 'tbody tr', (e) => {
+    let classList = e.currentTarget.classList;
+
+    if (classList.contains('selected')) {
+      classList.remove('selected');
+    } else {
+      table.rows('.selected').nodes().each((row) => row.classList.remove('selected'));
+      classList.add('selected');
+    }
+  });
+
+  $('#btn-modal-asignar').on('click', function(e) {
+    if (tableAsignar.row('.selected').data()) {
+      $('#id_orden').val(tableAsignar.row('.selected').data()[0]);
+      $('#modal-asignar').modal('show');
+
+    } else {
+      alert("selecione un equipo")
+    }
+
+  });
+
+  let tableCronograma =   $('#cronograma').DataTable({
+    "paging": true,
+    "lengthChange": false,
+    "autoWidth": true,
+    "responsive": false,
+    'scrollX': true
+  });
+
+  tableCronograma.on('click', 'tbody tr', (e) => {
+    let classList = e.currentTarget.classList;
+
+    if (classList.contains('selected')) {
+      classList.remove('selected');
+    } else {
+      table.rows('.selected').nodes().each((row) => row.classList.remove('selected'));
+      classList.add('selected');
+    }
+  });
+
+  $('#btn-modal-asignar-tecnico').on('click', function(e) {
+    if (tableCronograma.row('.selected').data()) {
+      $('#id_cronograma').val(tableCronograma.row('.selected').data()[0]);
+      $('#modal-asignar-tecnico').modal('show');
+
+    } else {
+      alert("selecione un equipo")
+    }
+
+  });
+
+  
+
+  $('#btn-upload').click(function() {
+    $('#modal-upload').modal('show');
+  });
+
+
+  var tablaFichas = $('#fichas').DataTable({
+    paging: true,
+    lengthChange: false,
+    searching: true,
+    ordering: true,
+    info: true,
+    autoWidth: true,
+    responsive: true,
+    select: true,
+    columnDefs: [{
+      data: null,
+      defaultContent: "<a class='fas text-primary fa-edit view-pdf'></a>",
+      targets: -1
+    }]
+  });
+
+  tablaFichas.on('click', '.view-pdf', function(e) {
+    $('#url_ficha').attr('src', '');
+    let dataTable = tablaFichas.row(e.target.closest('tr')).data();
+    console.log(`<?php echo base_url(); ?>${dataTable[2]}`);
+
+    $('#url_ficha').attr('src', '<?php echo base_url(); ?>' + dataTable[2]);
+    $('#modal-ficha').modal('show');
+
+  });
+</script>
 </body>
 
 </html>

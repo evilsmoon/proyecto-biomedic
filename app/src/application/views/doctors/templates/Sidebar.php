@@ -14,7 +14,7 @@
           <img src="" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Administrador</a>
+          <a href="#" class="d-block">Doctor</a>
         </div>
       </div>
 
@@ -25,7 +25,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="<?php echo base_url('Admin'); ?>" class="nav-link">
+            <a href="<?php echo base_url('Doctor'); ?>" class="nav-link">
               <i class="nav-icon fas fa-list-alt"></i>
               <p>
                 Inventario
@@ -33,38 +33,29 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?php echo base_url('Admin/Cronograma'); ?>" class="nav-link">
+            <a href="<?php echo base_url('Doctor/fichas_tecnicas'); ?>" class="nav-link">
               <i class="nav-icon fas fa-list-alt"></i>
               <p>
-                Cronograma
+                Fichas Tecnicas
               </p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?php echo base_url('Admin/usuarios'); ?>" class="nav-link">
+            <a href="<?php echo base_url('Doctor/pendientes'); ?>" class="nav-link">
               <i class="nav-icon fas fa-list-alt"></i>
               <p>
-                Usuarios
+                Mantenimiento correctivo 
               </p>
-            </a>
-          </li>
-          <li class="nav-item">
-              <a href="<?php echo base_url('Admin/preventivo'); ?>" class="nav-link position-relative ">
-                <i class="nav-icon fas fa-list-alt "></i>
-                <p >
-                  Notificaciones de mantenimiento preventivo
-                </p>
-                <span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger">+1
+              <span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger">+1
               </span>
-              </a>
+            </a>
           </li>
-
           <li class="nav-item">
-            <a href="<?php echo base_url('Admin/ordentrabajo'); ?>" class="nav-link">
+            <a href="<?php echo base_url('Doctor/cronograma'); ?>" class="nav-link">
               <i class="nav-icon fas fa-list-alt"></i>
               <p>
-                Notificaciones de mantenimiento correctivo 
-              </p>
+                Cronograma  
+              </p> 
               <span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger">+1
               </span>
             </a>

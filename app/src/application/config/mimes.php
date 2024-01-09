@@ -55,6 +55,7 @@ return array(
 	'tgz'	=>	array('application/x-tar', 'application/x-gzip-compressed'),
 	'z'	=>	'application/x-compress',
 	'xhtml'	=>	'application/xhtml+xml',
+	'xlsx'  => array('application/excel', 'application/vnd.ms-excel', 'application/octet-stream'),
 	'xht'	=>	'application/xhtml+xml',
 	'zip'	=>	array('application/x-zip', 'application/zip', 'application/x-zip-compressed', 'application/s-compressed', 'multipart/x-zip'),
 	'rar'	=>	array('application/x-rar', 'application/rar', 'application/x-rar-compressed'),

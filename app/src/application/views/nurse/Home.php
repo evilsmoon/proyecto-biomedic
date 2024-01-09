@@ -30,30 +30,30 @@
                             <table id="inventario" class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
-                                        <th>Ubicación</th>
-                                        <th>Número de Inventario</th>
-                                        <th>Marca</th>
-                                        <th>Modelo</th>
-                                        <th>Serie</th>
-                                        <th>Datos de Fabricante</th>
-                                        <th>Datos de Proveedor</th>
-                                        <th>Año de Fabricación</th>
-                                        <th>Acciones</th>
+                                    <th>ID</th>
+                                      <th>Número de Inventario</th>
+                                      <th>Area</th>
+                                      <th>Ubicación</th>
+                                      <th>Nombre del Equipo</th>
+                                      <th>Marca</th>
+                                      <th>Modelo</th>
+                                      <th>Serie</th>
+                                      <th>Funcionalidad</th>
+                                      <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php foreach ($equipos as $equipo) : ?>
                                         <tr>
-                                            <td><?php echo $equipo->id; ?></td>
-                                            <td><?php echo $equipo->ubicacion; ?></td>
-                                            <td><?php echo $equipo->numero_inventario; ?></td>
-                                            <td><?php echo $equipo->marca; ?></td>
-                                            <td><?php echo $equipo->modelo; ?></td>
-                                            <td><?php echo $equipo->serie; ?></td>
-                                            <td><?php echo $equipo->datos_fabricante; ?></td>
-                                            <td><?php echo $equipo->datos_proveedor; ?></td>
-                                            <td><?php echo $equipo->anio_fabricacion; ?></td>
+                                        <td><?php echo $equipo->id; ?></td>
+                                          <td><?php echo $equipo->numero_inventario; ?></td>
+                                          <td><?php echo $equipo->area; ?></td>
+                                          <td><?php echo $equipo->ubicacion; ?></td>
+                                          <td><?php echo $equipo->nombre_equipo; ?></td>
+                                          <td><?php echo $equipo->marca; ?></td>
+                                          <td><?php echo $equipo->modelo; ?></td>
+                                          <td><?php echo $equipo->serie; ?></td>
+                                          <td><?php echo $equipo->funcionalidad; ?></td>
                                             <td class="text-center"> </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -66,3 +66,11 @@
         </div>
     </section>
 </div>
+
+
+
+
+
+
+
+

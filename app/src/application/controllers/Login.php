@@ -30,25 +30,28 @@ class Login extends CI_Controller
     {
 
         if ($this->input->is_ajax_request()) {
-            $username = $this->input->post('username');
-            $password = $this->input->post('password');
-
-            $res = $this->M_Login->iniciarSession($username, $password);
+            $username = $this->input->post('usename');
+            $password = $this->input->post('usepassword');
+            
+            
+            $res = $this->M_Login->obtener_usuario_por_email_clave($username, $password);
 
             if ($res) {
          
 
-                if ($res->role === 'Administrador') {
+                if ($res['perfil'] === 'Administrador') {
                     echo ('1');
-                } else if ($res->role === 'Doctor') {
+                } else if ($res['perfil'] === 'Tecnico') {
                     echo ('2');
-                } else if ($res->role === 'Enfermera') {
+                } else if ($res['perfil'] === 'Enfermera') {
                     echo ('3');
                 }
+                
                 $data = [
-                    "id" => $res->id,
+                    "id" => $res['id'],
                     "Login" => TRUE,
-                    "Role" => $res->role
+                    "Role" => $res['perfil'],
+                    'user' => $res['nombre'].' '.$res['apellido'],
                 ];
                 $this->session->set_userdata($data);
                 
@@ -58,10 +61,9 @@ class Login extends CI_Controller
         }
     }
 
-    public function  cerrarSession()
-    {
-        /* 
-        SEERARAR
-        */
+    public function cerrar_sesion(){
+        $this->session->unset_userdata('id'); 
+        $this->session->sess_destroy();
+        redirect(base_url());
     }
 }

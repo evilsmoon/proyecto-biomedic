@@ -9,7 +9,6 @@ function login() {
 			data: parametros,
 			success: function (datos) {
 				if (datos == "1") {
-					console.log($(location).attr("href", "Admin"));
 					$(location).attr("href", "Admin");
 				} else if (datos == "2") {
 					$(location).attr("href", "Doctor");
