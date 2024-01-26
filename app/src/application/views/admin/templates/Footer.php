@@ -13,6 +13,12 @@
 <script type="text/javascript" src="<?php echo base_url('assets/js/responsive.bootstrap4.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/js/dataTables.buttons.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/js/buttons.bootstrap4.min.js'); ?>"></script>
+
+<script type="text/javascript" src="<?php echo base_url('assets/js/buttons.print.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/js/pdfmake.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/js/vfs_fonts.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/js/buttons.html5.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/js/jquery.table2excel.min.js'); ?>"></script>1
 <!-- overlayScrollbars -->
 <script type="text/javascript" src="<?php echo base_url('assets/js/jquery.overlayScrollbars.min.js'); ?>"></script>
 <!-- Adminlte core JavaScript -->
@@ -24,19 +30,8 @@
 
 
 <script>
-  const preguntas = ['#1-1-1', '#1-1-2', '#1-1-3', '#1-2-1', '#1-2-2', '#1-3-1', '#1-3-2', '#1-3-3', '#1-4-1', '#2-1', '#2-2', '#2-3', '#2-4', '#2-5'];
-
-  preguntas.forEach(function(e) {
-    $(e).on('input', function() {
-      var valor = $(this).val();
-      if (valor < 1 || valor > 10) {
-        $(this).removeClass('is-valid').addClass('is-invalid');
-      } else {
-        $(this).removeClass('is-invalid').addClass('is-valid');
-      }
-    });
-  })
-
+  // var pdfFonts = require('pdfmake/build/vfs_fonts.js');
+  // pdfMake.vfs = pdfFonts.pdfMake.vfs;
   $('#btn-modal').on('click', function(e) {
     $('#modal-inventario').modal('show');
     $('#title-formulario').html("Agregar Equipo")
@@ -56,9 +51,9 @@
     lengthChange: false,
     searching: true,
     ordering: true,
-    info: true,
+    info: false,
     autoWidth: true,
-    responsive: true,
+    responsive: false,
     select: true,
     columnDefs: [{
       data: null,
@@ -90,6 +85,7 @@
         $('#serie').val(data.serie);
         $('#funcionaliad').val(data.funcionaliad);
 
+        // $('#formEditarEquipo').html(data);
       },
       error: function(error) {
         console.log('Error al obtener datos del equipo:', error);
@@ -109,12 +105,18 @@
       success: function(data) {
         console.log(data);
         var role = '<?php echo $this->session->userdata('Role'); ?>';
+        console.log(role);
+
         if (role == 'Administrador') {
           window.location.href = 'Admin';
         } else {
           window.location.href = 'Doctor';
         }
 
+
+
+
+        // $('#formEditarEquipo').html(data);
       },
       error: function(error) {
         console.log('Error al obtener datos del equipo:', error);
@@ -161,6 +163,7 @@
 
   });
 
+
   /* 
     ! Usuarios 
   */
@@ -169,9 +172,10 @@
     lengthChange: false,
     searching: true,
     ordering: true,
-    info: true,
+    info: false,
     autoWidth: true,
-    responsive: true,
+    responsive: false,
+    select: true,
     select: true,
     columnDefs: [{
       data: null,
@@ -190,21 +194,17 @@
         id: dataTable[0]
       },
       success: function(data) {
-        console.log(data);
-        if (data) {
-          var jsonObj = JSON.parse(data);
-          $('#id').val(jsonObj.id)
+        $('#modal-usuario').modal('show');
+        $('#form-usuario').attr('action', '<?php echo base_url('Admin/editar_usuario'); ?>');
+        $('#title-formulario-usuario').html("Editar Equipo")
+        // Llenar el formulario con los datos obtenidos
 
-          $('#nombre').val(jsonObj.nombre)
-          $('#apellido').val(jsonObj.apellido)
-          $('#email').val(jsonObj.email)
-          $('#clave').val(jsonObj.clave)
-          $('#perfil').val(jsonObj.id_perfil)
-          $('#modal-usuario').modal('show');
-          $('#form-usuario').attr('action', '<?php echo base_url('Admin/editar_usuario'); ?>');
-          $('#title-formulario-usuario').html("Editar Equipo")
-        }
-
+        $('#id').val(data.id)
+        $('#nombre').val(data.nombre)
+        $('#apellido').val(data.apellido)
+        $('#email').val(data.email)
+        $('#clave').val(data.clave)
+        $('#perfil').val(data.id_perfil)
 
       },
       error: function(error) {
@@ -218,13 +218,15 @@
     let dataTable = tablaUsuarios.row(e.target.closest('tr')).data();
     console.log(dataTable);
     $.ajax({
-      type: 'GET',
-      url: '/Admin/eliminar_usuario',
+      type: 'POST',
+      url: '/Admin/eliminarUsuario',
       data: {
         id: dataTable[0]
       },
       success: function(data) {
         console.log(data);
+
+        window.location.href = "usuarios";
 
         // $('#formEditarEquipo').html(data);
       },
@@ -254,13 +256,15 @@
   */
 
   var tableAsignar = $('#solicitudes').DataTable({
-    "paging": true,
+    "dom": 'Bfrtip',
     "lengthChange": false,
-    "searching": true,
-    "ordering": true,
-    "info": true,
     "autoWidth": false,
     "responsive": true,
+    'scrollX': true,
+    "select": true,
+    "buttons": [
+      'print'
+    ],
   });
   tableAsignar.on('click', 'tbody tr', (e) => {
     let classList = e.currentTarget.classList;
@@ -274,22 +278,67 @@
   });
 
   $('#btn-modal-asignar').on('click', function(e) {
+
+    $('#modal-asignar').modal('show');
     if (tableAsignar.row('.selected').data()) {
       $('#id_orden').val(tableAsignar.row('.selected').data()[0]);
       $('#modal-asignar').modal('show');
 
     } else {
-      alert("selecione un equipo")
+      alert("Selecione un equipo")
     }
 
   });
 
-  let tableCronograma =   $('#cronograma').DataTable({
+  $('#btn-upload').click(function() {
+    $('#modal-upload').modal('show');
+  });
+
+  $('#btn-modal-descargar').click(function() {
+    $('#modal-descarga').modal('show');
+  });
+  var tablaFichas = $('#fichas').DataTable({
+    paging: true,
+    lengthChange: false,
+    searching: true,
+    ordering: true,
+    info: true,
+    autoWidth: true,
+    responsive: true,
+    select: true,
+    columnDefs: [{
+      data: null,
+      defaultContent: "<a class='fas text-primary fa-edit view-pdf'></a>",
+      targets: -1
+    }]
+  });
+
+  tablaFichas.on('click', '.view-pdf', function(e) {
+    let dataTable = tablaFichas.row(e.target.closest('tr')).data();
+
+
+    $('#url_ficha').attr('src', '<?php echo base_url(); ?>' + dataTable[2]);
+    $('#modal-ficha').modal('show');
+
+  });
+
+  let tableCronograma = $('#cronograma').DataTable({
     "paging": true,
     "lengthChange": false,
     "autoWidth": true,
     "responsive": false,
-    'scrollX': true
+    'scrollX': true,
+  });
+
+  $('#preventivo').DataTable({
+    paging: true,
+    lengthChange: false,
+    searching: true,
+    ordering: true,
+    info: true,
+    autoWidth: true,
+    responsive: true,
+
   });
 
   tableCronograma.on('click', 'tbody tr', (e) => {
@@ -309,42 +358,302 @@
       $('#modal-asignar-tecnico').modal('show');
 
     } else {
-      alert("selecione un equipo")
+      alert("Selecione un equipo")
     }
 
   });
 
-  
+  $('#btn-print-cronograma').on('click', function(e) {
+    $('#cronograma').table2excel({
+      filename: "Cronograma",
+      fileext: ".xlsx",
+    });
+    // wnd.print();
+  })
+  $('#btn-print-orden-trabajo').on('click', function(e) {
 
-  $('#btn-upload').click(function() {
-    $('#modal-upload').modal('show');
-  });
+    // playground requires you to assign document definition to a variable called dd
+    if (tableAsignar.row('.selected').data()) {
+      var docDefinition = {
+        pageSize: 'A4',
+        pageMargins: [40, 60, 40, 60],
+
+        content: [
+
+          {
+            text: [{
+                text: 'Biomed',
+                fontSize: 40,
+                bold: true,
+                color: '#7DBAE5'
+              },
+              {
+                text: 'Soft\n\n',
+                fontSize: 34
+              },
+            ],
+            alignment: 'center'
+          },
+          {
+            text: 'Orden de trabajo',
+            alignment: 'center'
+          },
+          {
+            text: `ID Orden:            ${tableAsignar.row('.selected').data()[0]} \n\n`,
+            alignment: 'right'
+          },
+          {
+            table: {
+              widths: ['*'],
+              body: [
+                [{
+                  text: 'Información Necesaria',
+                  alignment: 'center',
+                  border: [false, true, false, true],
+                }],
+              ],
+            }
+          },
+          {
+            text: '\n\n'
+          },
+          {
+            table: {
+              widths: [150, '*'],
+              body: [
+                [{
+                    text: 'Solicitado por:',
+                    alignment: 'left',
+                    border: [false, true, true, true],
+                  },
+                  {
+                    text: `${tableAsignar.row('.selected').data()[7]}`,
+                    alignment: 'left',
+                    border: [false, true, false, true],
+                  }
+                ],
+                [{
+                    text: 'Fecha:',
+                    alignment: 'left',
+                    border: [false, true, true, true],
+                  },
+                  {
+                    text: `${tableAsignar.row('.selected').data()[4]}`,
+                    alignment: 'left',
+                    border: [false, true, false, true],
+                  }
+                ],
+                [{
+                    text: 'Servicio Medico:',
+                    alignment: 'left',
+                    border: [false, true, true, true],
+                  },
+                  {
+                    text: `${tableAsignar.row('.selected').data()[3]}`,
+                    alignment: 'left',
+                    border: [false, true, false, true],
+                  }
+                ],
+                [{
+                    text: 'Prioridad:',
+                    alignment: 'left',
+                    border: [false, true, true, true],
+                  },
+                  {
+                    text: `${tableAsignar.row('.selected').data()[2]}`,
+                    alignment: 'left',
+                    border: [false, true, false, true],
+                  }
+                ],
+                [{
+                    text: ' ',
+                    alignment: 'left',
+                    border: [false, true, false, true],
+                  },
+                  {
+                    text: ' ',
+                    alignment: 'left',
+                    border: [false, true, false, true],
+                  }
+                ],
+                [{
+                    text: `Nombre del equipo:`,
+                    alignment: 'left',
+                    border: [false, true, false, true],
+                  },
+                  {
+                    text: `Asunto: `,
+                    alignment: 'center',
+                    border: [false, true, false, true],
+                  }
+                ],
+                [{
+                    text: ' ',
+                    alignment: 'left',
+                    border: [false, false, false, false],
+                  },
+                  {
+                    text: ' ',
+                    alignment: 'left',
+                    border: [false, false, false, false],
+                  }
+                ],
 
 
-  var tablaFichas = $('#fichas').DataTable({
-    paging: true,
-    lengthChange: false,
-    searching: true,
-    ordering: true,
-    info: true,
-    autoWidth: true,
-    responsive: true,
-    select: true,
-    columnDefs: [{
-      data: null,
-      defaultContent: "<a class='fas text-primary fa-edit view-pdf'></a>",
-      targets: -1
-    }]
-  });
+              ],
 
-  tablaFichas.on('click', '.view-pdf', function(e) {
-    $('#url_ficha').attr('src', '');
-    let dataTable = tablaFichas.row(e.target.closest('tr')).data();
-    console.log(`<?php echo base_url(); ?>${dataTable[2]}`);
+            }
 
-    $('#url_ficha').attr('src', '<?php echo base_url(); ?>' + dataTable[2]);
-    $('#modal-ficha').modal('show');
+          },
+          {
 
+            columnGap: 50,
+            columns: [{
+                table: {
+                  widths: ['*'],
+                  body: [
+                    [{
+                      text: `${tableAsignar.row('.selected').data()[1]}`,
+                      alignment: 'left',
+                      border: [false, true, false, false],
+                    }, ],
+                  ]
+                }
+              },
+              {
+
+                table: {
+                  widths: ['*'],
+                  body: [
+                    [{
+                      text: `${tableAsignar.row('.selected').data()[6]}`,
+                      alignment: 'center',
+                      border: [false, true, false, false],
+                    }, ],
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            margin: [0, 60],
+            columnGap: 50,
+            columns: [
+              [
+
+                {
+                  table: {
+                    widths: ['*'],
+                    body: [
+                      [{
+                        text: ' ',
+                        alignment: 'left',
+                        border: [false, true, false, true],
+                      }, ],
+                    ]
+                  }
+                },
+                {
+                  table: {
+                    widths: [100, '*'],
+                    heights: [50, 50],
+                    body: [
+                      [{
+                          text: 'Nombre del personal asignado: ',
+                          alignment: 'left',
+                          border: [false, false, true, true],
+                        },
+                        {
+                          text: `${tableAsignar.row('.selected').data()[5]}`,
+                          alignment: 'center',
+                          border: [false, false, false, true],
+                        },
+                      ],
+                    ]
+                  }
+                },
+                {
+                  margin: [0, 60],
+                  table: {
+                    widths: ['*'],
+                    heights: [80],
+                    body: [
+                      [{
+                        text: ' ',
+                        alignment: 'left',
+                        border: [true, true, true, true],
+                      }, ],
+                      [{
+                        text: 'Firma',
+                        alignment: 'center',
+                        border: [false, false, false, false],
+                      }, ]
+                    ]
+                  }
+                }
+              ],
+              [
+
+                {
+                  table: {
+                    widths: ['*'],
+                    body: [
+                      [{
+                        text: ' ',
+                        alignment: 'right',
+                        border: [false, true, false, true],
+                      }, ],
+                    ],
+                    alignment: 'right',
+                  }
+                },
+                {
+                  table: {
+                    widths: [100, "*"],
+                    heights: [50, 50],
+                    body: [
+                      [{
+                          text: 'Estado de la solicitud: ',
+                          alignment: 'left',
+                          border: [false, false, true, true],
+                        },
+                        {
+                          text: `${tableAsignar.row('.selected').data()[8]}`,
+                          alignment: 'left',
+                          border: [false, false, false, true],
+                        },
+                      ],
+                    ]
+                  }
+                },
+                {
+                  margin: [0, 60],
+                  table: {
+                    widths: ['*'],
+                    heights: [80],
+                    body: [
+                      [{
+                        text: ' ',
+                        alignment: 'left',
+                        border: [true, true, true, true],
+                      }, ],
+                      [{
+                        text: 'Firma',
+                        alignment: 'center',
+                        border: [false, false, false, false],
+                      }, ]
+                    ]
+                  }
+                },
+
+              ]
+            ]
+          }
+        ],
+
+      }
+      pdfMake.createPdf(docDefinition).open();
+    }
   });
 </script>
 </body>

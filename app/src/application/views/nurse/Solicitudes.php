@@ -7,7 +7,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Admin</a></li>
+                        <li class="breadcrumb-item"><a href="#">Enfermera</a></li>
                         <li class="breadcrumb-item active">Estado de las Solicitudes</li>
                     </ol>
                 </div>
@@ -23,6 +23,9 @@
                         <div class="card-header">
                             <a class="btn btn-app" type="button" id="btn-modal-calificar">
                                 <i class="fas fa-tasks"></i> Calificar
+                            </a>
+                            <a class="btn btn-app" type="button" id="btn-print-orden-trabajo">
+                                <i class="fas fa-print"></i> Imprimir
                             </a>
                         </div>
                         <div class="card-body">
@@ -40,8 +43,8 @@
                                         <th>Estado:</th>
                                     </tr>
                                 </thead>
+                                <tbody>
                                 <?php foreach ($ordenes as $orden) : ?>
-                                    <tbody>
                                         <tr>
                                             <td><?php echo $orden['id']; ?></td>
                                             <td><?php echo $orden['nombre_equipo']; ?></td>
@@ -53,8 +56,8 @@
                                             <td><?php echo $orden['nombre_solicitante']; ?></td>
                                             <td><?php echo $orden['estado']; ?></td>
                                         </tr>
+                                        <?php endforeach; ?>
                                     </tbody>
-                                <?php endforeach; ?>
                             </table>
                         </div>
                     </div>

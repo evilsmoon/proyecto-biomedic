@@ -15,20 +15,16 @@ class Enfermera extends CI_Controller
         $this->load->model('M_Enfermera');
     }
 
-    public function index($page = 'Enfermera')
+    public function index()
     {
-        if (!file_exists(APPPATH . 'views/' . $page . '.php')) {
-            show_404();
-        } else {
-            $data['equipos'] = $this->M_Enfermera->obtenerEquipos();
-            $this->load->view('nurse/templates/Header');
-            $this->load->view('nurse/templates/Navbar');
-            $this->load->view('nurse/templates/Sidebar');
-            $this->load->view('nurse/Home', $data);
-            $this->load->view('nurse/forms/Form-Formulario');
-            $this->load->view('nurse/forms/Form-Solicitud');
-            $this->load->view('nurse/templates/Footer');
-        }
+        $data['equipos'] = $this->M_Enfermera->obtenerEquipos();
+        $this->load->view('nurse/templates/Header');
+        $this->load->view('nurse/templates/Navbar');
+        $this->load->view('nurse/templates/Sidebar');
+        $this->load->view('nurse/Home', $data);
+        $this->load->view('nurse/forms/Form_Formulario');
+        $this->load->view('nurse/forms/Form_Solicitud');
+        $this->load->view('nurse/templates/Footer');
     }
 
     public function detallesFormulario()
@@ -59,9 +55,12 @@ class Enfermera extends CI_Controller
             if ($id_insertado) {
                 // La inserción fue exitosa
                 echo 'Se insertó el registro con ID: ' . $id_insertado;
+                redirect("Enfermera/Solicitudes");
+                
             } else {
                 // Error al insertar
                 echo 'Error al insertar el registro';
+                redirect("Enfermera/Solicitudes");
             }
         }
     }
@@ -74,7 +73,7 @@ class Enfermera extends CI_Controller
         $this->load->view('nurse/templates/Navbar');
         $this->load->view('nurse/templates/Sidebar');
         $this->load->view('nurse/Solicitudes', $data);
-        $this->load->view('nurse/forms/Form-Calificar');
+        $this->load->view('nurse/forms/Form_Calificar');
         $this->load->view('nurse/templates/Footer');
     }
 
@@ -90,7 +89,6 @@ class Enfermera extends CI_Controller
             redirect('Enfermera/solicitudes');
         }
     }
-
     public function cronograma() {
         $this->load->model('M_Admin');
         $data['cronogramas'] = $this->M_Admin->obtenerCronograma();

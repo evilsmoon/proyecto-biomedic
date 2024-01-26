@@ -3,11 +3,17 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Solicitudes</h1>
+                    <h1>Fichas Tecnicas</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Técnico</a></li>
+                    <?php if ($this->session->userdata('Role') == 'Administrador') { ?>
+                        <li class="breadcrumb-item"><a href="#">Admin</a></li>
+                     <?php   } else {?>
+
+                            <li class="breadcrumb-item"><a href="#">Técnico</a></li>
+                     <?php   }?>
+
                         <li class="breadcrumb-item active">Ficha Tecnicas</li>
                     </ol>
                 </div>
@@ -20,11 +26,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                    <div class="card-header">
-                            <a class="btn btn-app" type="button" id="btn-modal-ficha">
-                                <i class="fas fa-file-alt"></i>
-                            </a>
-                        </div>
+                    
                         <div class="card-body">
                             <table id='fichas' class="table table-bordered table-hover">
                                 <thead>

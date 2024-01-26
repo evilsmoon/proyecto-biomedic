@@ -10,15 +10,11 @@ class Login extends CI_Controller
         $this->load->model('M_Login');
     }
 
-    public function index($page = 'Login')
+    public function index()
     {
-        if (!file_exists(APPPATH . 'views/' . $page . '.php')) {
-            show_404();
-        } else {
-            $this->load->view('admin/templates/header');
-            $this->load->view('Login');
-            $this->load->view('admin/templates/footer');
-        }
+        $this->load->view('login/templates/Header');
+        $this->load->view('Login');
+        $this->load->view('login/templates/Footer');
     }
 
 
@@ -32,12 +28,12 @@ class Login extends CI_Controller
         if ($this->input->is_ajax_request()) {
             $username = $this->input->post('usename');
             $password = $this->input->post('usepassword');
-            
-            
+
+
             $res = $this->M_Login->obtener_usuario_por_email_clave($username, $password);
 
             if ($res) {
-         
+
 
                 if ($res['perfil'] === 'Administrador') {
                     echo ('1');
@@ -46,23 +42,23 @@ class Login extends CI_Controller
                 } else if ($res['perfil'] === 'Enfermera') {
                     echo ('3');
                 }
-                
+
                 $data = [
                     "id" => $res['id'],
                     "Login" => TRUE,
                     "Role" => $res['perfil'],
-                    'user' => $res['nombre'].' '.$res['apellido'],
+                    'user' => $res['nombre'] . ' ' . $res['apellido'],
                 ];
                 $this->session->set_userdata($data);
-                
             }
-        }else{
+        } else {
             redirect(base_url());
         }
     }
 
-    public function cerrar_sesion(){
-        $this->session->unset_userdata('id'); 
+    public function cerrar_sesion()
+    {
+        $this->session->unset_userdata('id');
         $this->session->sess_destroy();
         redirect(base_url());
     }

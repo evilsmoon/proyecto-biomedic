@@ -12,10 +12,10 @@
                     <input type="text" id="idEquipo" name="idEquipo" hidden>
                     <div class="row">
                         <div class="col-md">
-
+ 
                             <div class="form-group">
                                 <label for="tecnicos">Nivel del Riesgo :</label>
-                                <select class="form-control" id="nivel_riesgpo" name="nivel_riesgpo" required>
+                                <select class="form-control" id="nivel_riesgpo" name="nivel_riesgpo" required <?php echo $this->session->userdata('Role') == 'Administrador' ? '' : 'disabled'; ?>>
                                     <option value="" ></option>
                                     <option value="1.1">Riesgo Alto | 4 </option>
                                     <option value="1.2">Riesgo Moderado Alto | 3 </option>
@@ -23,10 +23,10 @@
                                     <option value="1.4">Riesgo Bajo | 1 </option>
                                 </select>
                             </div>
-
+ 
                             <div class="form-group">
                                 <label for="tecnicos">Funcion del equipo :</label>
-                                <select class="form-control" id="funcion_equipo" name="funcion_equipo" required>>
+                                <select class="form-control" id="funcion_equipo" name="funcion_equipo" required <?php echo $this->session->userdata('Role') == 'Administrador' ? '' : 'disabled'; ?>>
                                     <option value="" ></option>
                                         <optgroup label="Terapéuticos">
                                             <option value="2.1.1">Soporte de vida | 10</option>
@@ -47,10 +47,10 @@
                                         </optgroup>
                                 </select>
                             </div>
-
+ 
                             <div class="form-group">
                                 <label for="tecnicos">Requisitos de mantenimiento :</label>
-                                <select class="form-control" id="requisitos_mantenimiento" name="requisitos_mantenimiento" required>>
+                                <select class="form-control" id="requisitos_mantenimiento" name="requisitos_mantenimiento" required <?php echo $this->session->userdata('Role') == 'Administrador' ? '' : 'disabled'; ?>>
                                     <option value="" ></option>
                                         <optgroup label="Extenso">
                                             <option value="3.1.1">Importantes: exige calibración y reemplazo de piezas periódicos | 5</option>
@@ -65,10 +65,10 @@
                                         </optgroup>
                                 </select>
                             </div>
-
+ 
                             <div class="form-group">
                                 <label for="tecnicos">Tipo de desgaste :</label>
-                                <select class="form-control" id="tipo_desgaste" name="tipo_desgaste" required>>
+                                <select class="form-control" id="tipo_desgaste" name="tipo_desgaste" required <?php echo $this->session->userdata('Role') == 'Administrador' ? '' : 'disabled'; ?>>
                                     <option value="" ></option>
                                         <optgroup label="Alto">
                                             <option value="4.1">Alto | 5</option>
@@ -86,10 +86,10 @@
                                         </optgroup>
                                 </select>
                             </div>
-
+ 
                             <div class="form-group">
                                 <label for="tecnicos">Frecuencia de uso :</label>
-                                <select class="form-control" id="frecuencia_uso" name="frecuencia_uso" required>
+                                <select class="form-control" id="frecuencia_uso" name="frecuencia_uso" required <?php echo $this->session->userdata('Role') == 'Administrador' ? '' : 'disabled'; ?>>
                                     <option value="" ></option>
                                     <option value="5.1">24 horas | 5</option>
                                     <option value="5.2">Diariamente | 4</option>
@@ -98,10 +98,10 @@
                                     <option value="5.5">Ocasionalmente | 1</option>
                                 </select>
                             </div>
-
+ 
                             <div class="form-group">
                                 <label for="tecnicos"> Promedio de averías del equipo :</label>
-                                <select class="form-control" id="averias_equipo" name="averias_equipo" required>
+                                <select class="form-control" id="averias_equipo" name="averias_equipo" required <?php echo $this->session->userdata('Role') == 'Administrador' ? '' : 'disabled'; ?>>
                                     <option value="" ></option>
                                     <option value="6.1">Significativo: más de una cada seis meses | 2 </option>
                                     <option value="6.2">Moderado: una cada 6-9 meses | 1 </option>
@@ -110,15 +110,15 @@
                                     <option value="6.5">Insignificante: menos de una en los 30 meses anteriores | -2 </option>
                                 </select>
                             </div>
-
+ 
                         </div>
-
-
+ 
+ 
                     </div>
-
+ 
                     <div class="d-flex justify-content-between gap-3">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success">Guardar</button>
+                        <button type="submit" class="btn btn-success" <?php echo $this->session->userdata('Role') == 'Administrador' ? '' : 'disabled'; ?> >Guardar</button> 
                     </div>
                 </form>
             </div>

@@ -7,7 +7,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Doctor</a></li>
+                        <li class="breadcrumb-item"><a href="#">Técnico</a></li>
                         <li class="breadcrumb-item active">Inventario</li>
                     </ol>
                 </div>
@@ -63,8 +63,10 @@
                     </div>
                 </div>
             </div>
+            
         </div>
     </section>
+
 
 
 </div>

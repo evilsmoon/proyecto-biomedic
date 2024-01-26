@@ -8,15 +8,13 @@ class M_Login extends CI_Model
     {
         parent::__construct();
         $this->load->database();
-
-    
     }
 
     public function obtener_usuario_por_email_clave($email, $clave) {
         // Consulta para verificar las credenciales en la base de datos
-        $this->db->select('Usuarios.*, Perfiles.nombre as perfil');
-        $this->db->from('Usuarios');
-        $this->db->join('Perfiles', 'Perfiles.id = Usuarios.id_perfil ');
+        $this->db->select('usuarios.*, perfiles.nombre as perfil');
+        $this->db->from('usuarios');
+        $this->db->join('perfiles', 'perfiles.id = usuarios.id_perfil ');
         $this->db->where('email', $email);
         $this->db->where('clave', $clave);
         $query = $this->db->get();

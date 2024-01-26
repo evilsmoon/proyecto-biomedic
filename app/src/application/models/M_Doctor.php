@@ -11,19 +11,22 @@ class M_Doctor extends CI_Model
     }
 
     public function obtenerOrdenesPorPersonalAsignado($idPersonal) {
-        $this->db->select('ot.id, ot.fecha, ot.prioridad, ot.servicio_medico, u.id as personal_asignado, CONCAT(u.nombre, " ", u.apellido) as nombre_personal, ot.asunto, ot.solicitado_por, (SELECT CONCAT(us.nombre, " ", us.apellido) FROM Usuarios us WHERE us.id = ot.solicitado_por) as nombre_solicitante, ot.estado, e.id as id_equipo, e.nombre_equipo');
+        $this->db->select('ot.id, ot.fecha, ot.prioridad, ot.servicio_medico, u.id as personal_asignado, CONCAT(u.nombre, " ", u.apellido) as nombre_personal, ot.asunto, ot.solicitado_por, (SELECT CONCAT(us.nombre, " ", us.apellido) FROM usuarios us WHERE us.id = ot.solicitado_por) as nombre_solicitante, ot.estado, e.id as id_equipo, e.nombre_equipo');
         $this->db->from('orden_trabajo as ot');
         $this->db->join('equipos e', 'ot.id_equipo = e.id', 'LEFT');
-        $this->db->join('Usuarios u', 'ot.personal_asignado = u.id', 'LEFT');
+        $this->db->join('usuarios u', 'ot.personal_asignado = u.id', 'LEFT');
         $this->db->where('ot.personal_asignado', $idPersonal);
         $query = $this->db->get();
         return $query->result_array();
     }
+    public function obtener_todas_las_fichas() {
+        $query = $this->db->get('fichas_tecnicas');
+        return $query->result_array();
+    }
 
-        
-   public function obtenerCronogramaPorPersonalAsignado($idPersonal)
+    public function obtenerCronogramaPorPersonalAsignado($idPersonal)
     {
-
+ 
         $query = $this->db->select("c.Equipo_ID,
         e.nombre_equipo,
         CONCAT(u.nombre, ' ', u.apellido) as nombre_personal,
@@ -39,16 +42,12 @@ class M_Doctor extends CI_Model
         c.Cuatrimestre_10_1, c.Cuatrimestre_10_2, c.Cuatrimestre_10_3, c.Cuatrimestre_10_4,
         c.Cuatrimestre_11_1, c.Cuatrimestre_11_2, c.Cuatrimestre_11_3, c.Cuatrimestre_11_4,
         c.Cuatrimestre_12_1, c.Cuatrimestre_12_2, c.Cuatrimestre_12_3, c.Cuatrimestre_12_4")
-            ->from('Cronograma c')
+            ->from('cronograma c')
             ->join('equipos e', 'e.id = c.Equipo_ID', 'left')
-            ->join('Usuarios u', 'u.id = c.usuario_id', 'left')
+            ->join('usuarios u', 'u.id = c.usuario_id', 'left')
             ->where('u.id',$idPersonal)
             ->get();
         return $query->result();
     }
-    
-    public function obtener_todas_las_fichas() {
-        $query = $this->db->get('fichas_tecnicas');
-        return $query->result_array();
-    }
+
 }

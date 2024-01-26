@@ -48,14 +48,14 @@ class M_Enfermera extends CI_Model
             (
                 SELECT 
                     CONCAT(us.nombre, ' ', us.apellido) 
-                FROM Usuarios us WHERE us.id = ot.solicitado_por
+                FROM usuarios us WHERE us.id = ot.solicitado_por
             ) as nombre_solicitante,
             ot.estado,
             e.id as id_equipo,
             e.nombre_equipo
         FROM orden_trabajo as ot
         LEFT JOIN equipos e ON (ot.id_equipo = e.id)
-        LEFT JOIN Usuarios u ON (ot.personal_asignado = u.id)");
+        LEFT JOIN usuarios u ON (ot.personal_asignado = u.id)");
         return $query->result_array();
     }
 

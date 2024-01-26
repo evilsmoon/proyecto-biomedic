@@ -1,4 +1,3 @@
-
 <div class="modal fade" id="modal-usuario">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -11,7 +10,6 @@
             <div class="modal-body">
                 <form method="post" id="form-usuario" action="<?php echo base_url('Admin/crear_usuario'); ?>">
                 <input type="text" id="id" name="id" hidden>
-
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -48,7 +46,7 @@
                                 <select class="form-control" id="perfil" name="perfil" required>
                                     <option value="">Selecciona un perfil</option>
                                     <option value="1">Administrador</option>
-                                    <option value="2">Tecnico</option>
+                                    <option value="2">Técnico</option>
                                     <option value="3">Enfermera</option>
                                 </select>
                             </div>

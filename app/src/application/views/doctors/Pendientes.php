@@ -7,7 +7,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Admin</a></li>
+                        <li class="breadcrumb-item"><a href="#">Técnico</a></li>
                         <li class="breadcrumb-item active">Solicitudes</li>
                     </ol>
                 </div>
@@ -20,11 +20,14 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-            <!--             <div class="card-header">
-                            <a class="btn btn-app" type="button" id="btn-modal-asignar">
-                                <i class="fas fa-tasks"></i> Asignar Trabajo
+                         <div class="card-header">
+                            <a class="btn btn-app" type="button" id="btn-modal-descargar">
+                                <i class="fas fa-download"></i> Descargar Hoja de Ruta
                             </a>
-                        </div> -->
+                            <a class="btn btn-app" type="button" id="btn-print-orden-trabajo">
+                                <i class="fas fa-print"></i> Imprimir
+                            </a>
+                        </div> 
                         <div class="card-body">
                             <table id="solicitudes" class="table table-bordered table-hover">
                                 <thead>
@@ -40,8 +43,8 @@
                                         <th>Estado:</th>
                                     </tr>
                                 </thead>
+                                <tbody>
                                 <?php foreach ($ordenes as $orden) : ?>
-                                    <tbody>
                                         <tr>
                                             <td><?php echo $orden['id']; ?></td>
                                             <td><?php echo $orden['nombre_equipo']; ?></td>
@@ -53,8 +56,8 @@
                                             <td><?php echo $orden['nombre_solicitante']; ?></td>
                                             <td><?php echo $orden['estado']; ?></td>
                                         </tr>
-                                    </tbody>
-                                <?php endforeach; ?>
+                                        <?php endforeach; ?>
+                                </tbody>
                             </table>
                         </div>
                     </div>

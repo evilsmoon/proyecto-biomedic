@@ -1,23 +1,25 @@
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside class="main-sidebar sidebar-light-lightblue elevation-4">
     <!-- Brand Logo -->
+    <style>
+      .brand-link {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+
     <a href="#" class="brand-link">
-      <!-- <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8"> -->
-      <span class="brand-text font-weight-light">BioMedic</span>
+      <span class="brand-text font-weight-light">Biomed Soft</span>
     </a>
 
     <!-- Sidebar -->
     <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-          <a href="#" class="d-block">Doctor</a>
-        </div>
+     <!-- Sidebar user panel (optional) -->
+     <div class="user-panel text-center  mt-3 pb-3 mb-3">
+        <i class=" fas fa-user mx-1" style="color: #7DBAE5;" ></i>
+         <?php echo $this->session->userdata('user'); ?>
       </div>
-
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
@@ -25,39 +27,29 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="<?php echo base_url('Doctor'); ?>" class="nav-link">
-              <i class="nav-icon fas fa-list-alt"></i>
+            <a href="<?php echo base_url('Doctor');?>" class="nav-link">
+              <i class="nav-icon fas fa-list-alt" style="color: #7DBAE5;"></i>
               <p>
                 Inventario
               </p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="<?php echo base_url('Doctor/fichas_tecnicas'); ?>" class="nav-link">
-              <i class="nav-icon fas fa-list-alt"></i>
-              <p>
-                Fichas Tecnicas
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
+         <li class="nav-item">
             <a href="<?php echo base_url('Doctor/pendientes'); ?>" class="nav-link">
-              <i class="nav-icon fas fa-list-alt"></i>
+              <i class="nav-icon fas fa-list-alt" style="color: #7DBAE5;"></i>
               <p>
-                Mantenimiento correctivo 
+                Mantenimiento correctivo
+                <span class="badge badge-danger right">+1</span>
               </p>
-              <span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger">+1
-              </span>
             </a>
           </li>
           <li class="nav-item">
             <a href="<?php echo base_url('Doctor/cronograma'); ?>" class="nav-link">
-              <i class="nav-icon fas fa-list-alt"></i>
+              <i class="nav-icon fas fa-list-alt" style="color: #7DBAE5;"></i>
               <p>
                 Cronograma  
-              </p> 
-              <span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger">+1
-              </span>
+        
+              </p>
             </a>
           </li>
         </ul>

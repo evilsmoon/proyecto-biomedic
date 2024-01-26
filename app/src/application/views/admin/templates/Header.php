@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proyecto</title>
+    <title>BiomedSoft</title>
     
     <!-- Font Awesome -->
     <link href="<?php echo base_url('assets/css/all.min.css');?>" rel="stylesheet">
@@ -10,6 +10,7 @@
     <link href="<?php echo base_url('assets/css/dataTables.bootstrap4.min.css');?>" rel="stylesheet">
     <link href="<?php echo base_url('assets/css/responsive.bootstrap4.min.css');?>" rel="stylesheet">
     <link href="<?php echo base_url('assets/css/buttons.bootstrap4.min.css');?>" rel="stylesheet">
+    <link href="<?php echo base_url('assets/css/buttons.dataTables.min.css');?>" rel="stylesheet">
     <link href="<?php echo base_url('assets/css/jquery.dataTables.min.css');?>" rel="stylesheet">
 
     <!-- Adminlte -->

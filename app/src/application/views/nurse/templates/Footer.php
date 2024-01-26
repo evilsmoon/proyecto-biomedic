@@ -13,6 +13,11 @@
 <script type="text/javascript" src="<?php echo base_url('assets/js/responsive.bootstrap4.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/js/dataTables.buttons.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/js/buttons.bootstrap4.min.js'); ?>"></script>
+
+<script type="text/javascript" src="<?php echo base_url('assets/js/buttons.print.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/js/pdfmake.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/js/vfs_fonts.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/js/buttons.html5.min.js'); ?>"></script>
 <!-- overlayScrollbars -->
 <script type="text/javascript" src="<?php echo base_url('assets/js/jquery.overlayScrollbars.min.js'); ?>"></script>
 <!-- Adminlte core JavaScript -->
@@ -117,6 +122,9 @@
     "info": true,
     "autoWidth": false,
     "responsive": true,
+        "select": true,
+    "dom": 'Bfrtip',
+    "buttons": ["pdf", "print"]
   });
 
   tableSolicitudes.on('click', 'tbody tr', (e) => {

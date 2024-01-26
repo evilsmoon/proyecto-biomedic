@@ -24,9 +24,12 @@
                             <a class="btn btn-app" type="button" id="btn-modal-asignar">
                                 <i class="fas fa-tasks"></i> Asignar Trabajo
                             </a>
+                            <a class="btn btn-app" type="button" id="btn-print-orden-trabajo">
+                                <i class="fas fa-print"></i> Imprimir
+                            </a>
                         </div>
                         <div class="card-body">
-                            <table id="solicitudes" class="table table-bordered table-hover">
+                            <table id="solicitudes" class="table table-bordered  table-hover">
                                 <thead>
                                     <tr>
                                         <th>ID de Orden:</th>
@@ -40,21 +43,21 @@
                                         <th>Estado:</th>
                                     </tr>
                                 </thead>
-                                <?php foreach ($ordenes as $orden) : ?>
-                                    <tbody>
+                                <tbody>
+                                    <?php foreach ($ordenes as $orden) : ?>
                                         <tr>
-                                            <td><?php echo $orden['id']; ?></td>
-                                            <td><?php echo $orden['nombre_equipo']; ?></td>
-                                            <td><?php echo $orden['prioridad']; ?></td>
-                                            <td><?php echo $orden['servicio_medico']; ?></td>
-                                            <td><?php echo $orden['fecha']; ?></td>
-                                            <td><?php echo $orden['nombre_personal']; ?></td>
-                                            <td><?php echo $orden['asunto']; ?></td>
-                                            <td><?php echo $orden['nombre_solicitante']; ?></td>
-                                            <td><?php echo $orden['estado']; ?></td>
+                                            <td><?php echo $orden->id; ?></td>
+                                            <td><?php echo $orden->nombre_equipo; ?></td>
+                                            <td><?php echo $orden->prioridad; ?></td>
+                                            <td><?php echo $orden->servicio_medico; ?></td>
+                                            <td><?php echo $orden->fecha; ?></td>
+                                            <td><?php echo $orden->nombre_personal; ?></td>
+                                            <td><?php echo $orden->asunto; ?></td>
+                                            <td><?php echo $orden->nombre_solicitante; ?></td>
+                                            <td><?php echo $orden->estado; ?></td>
                                         </tr>
-                                    </tbody>
-                                <?php endforeach; ?>
+                                    <?php endforeach; ?>
+                                </tbody>
                             </table>
                         </div>
                     </div>

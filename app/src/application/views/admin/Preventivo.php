@@ -21,28 +21,30 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <table id="preventivo" class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>ID Equipo</th>
-                                        <th>Número de Inventario</th>
-                                        <th>Frecuencia de Mantenimiento</th>
-                                        <th>Nombre del Equipo</th>
-                                        <th>Servicio Médico</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($mantenimientos as $mantenimiento) : ?>
+                            <div class="table-responsive-xl">
+                                <table id="preventivo" class="table table-bordered table-hover">
+                                    <thead>
                                         <tr>
-                                            <td><?php echo $mantenimiento->id_equipo; ?></td>
-                                            <td><?php echo $mantenimiento->numero_inventario; ?></td>
-                                            <td><?php echo $mantenimiento->frecuencia_mantenimiento; ?></td>
-                                            <td><?php echo $mantenimiento->nombre_equipo; ?></td>
-                                            <td><?php echo $mantenimiento->servicio_medico; ?></td>
+                                            <th>ID Equipo</th>
+                                            <th>Número de Inventario</th>
+                                            <th>Frecuencia de Mantenimiento</th>
+                                            <th>Nombre del Equipo</th>
+                                            <th>Servicio Médico</th>
                                         </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($mantenimientos as $mantenimiento) : ?>
+                                            <tr>
+                                                <td><?php echo $mantenimiento->id_equipo; ?></td>
+                                                <td><?php echo $mantenimiento->numero_inventario; ?></td>
+                                                <td><?php echo $mantenimiento->frecuencia_mantenimiento; ?></td>
+                                                <td><?php echo $mantenimiento->nombre_equipo; ?></td>
+                                                <td><?php echo $mantenimiento->servicio_medico; ?></td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

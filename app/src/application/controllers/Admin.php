@@ -2,6 +2,7 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 require 'vendor/autoload.php';
+
 class Admin extends CI_Controller
 {
     function __construct()
@@ -12,7 +13,6 @@ class Admin extends CI_Controller
         $user_role = $this->session->userdata('Role');
 
         if (!in_array($user_role, $allowed_roles)) {
-
             redirect(base_url()); // Redirige si el rol no está permitido
         }
         $this->load->library('upload');
@@ -27,9 +27,9 @@ class Admin extends CI_Controller
         $this->load->view('admin/templates/Navbar');
         $this->load->view('admin/templates/Sidebar');
         $this->load->view('admin/Inventario', $data);
-        $this->load->view('admin/forms/Form-Inventario');
-        $this->load->view('admin/forms/Form-Formulario');
-        $this->load->view('admin/forms/Form-Upload.php');
+        $this->load->view('admin/forms/Form_Inventario');
+        $this->load->view('admin/forms/Form_Formulario');
+        $this->load->view('admin/forms/Form_Upload.php');
         $this->load->view('admin/templates/Footer');
     }
 
@@ -45,7 +45,7 @@ class Admin extends CI_Controller
                 'area' => $this->input->post('area'),
                 'nombre_equipo' => $this->input->post('nombre_equipo'),
                 'serie' => $this->input->post('serie'),
-                'funcionaliad' => $this->input->post('funcionaliad'),
+                'funcionalidad' => $this->input->post('funcionalidad'),
             );
 
             $this->M_Admin->insertarEquipo($data);
@@ -71,7 +71,7 @@ class Admin extends CI_Controller
                 'area' => $this->input->post('area'),
                 'nombre_equipo' => $this->input->post('nombre_equipo'),
                 'serie' => $this->input->post('serie'),
-                'funcionaliad' => $this->input->post('funcionaliad'),
+                'funcionalidad' => $this->input->post('funcionalidad'),
             );
 
             $res = $this->M_Admin->actualizarEquipo($id, $data);
@@ -93,19 +93,42 @@ class Admin extends CI_Controller
         if ($this->input->server('REQUEST_METHOD') === 'GET') {
             $id = $this->input->get('id');
 
-            $resp = $this->M_Admin->eliminarEquipo($id);
+            $res = $this->M_Admin->eliminarEquipo($id);
+
+            echo $res;
+        }
+    }
+
+    //public function eliminarUsuario()
+    //{
+    //    if ($this->input->server('REQUEST_METHOD') === 'POST') {
+    //        $id = $this->input->post('id');
+
+    //        $resp = $this->M_Admin->eliminar_usuario($id);
+    //        echo  $resp;
+    //   }
+    //}
+
+    public function eliminar_usuario()
+    {
+        if ($this->input->server('REQUEST_METHOD') === 'GET') {
+            $id = $this->input->get('id');
+
+            $resp = $this->M_Admin->eliminarUsuario($id);
             echo  $resp;
         }
     }
 
-    public function preventivo()
+
+    public function detallesFormulario()
     {
-        $data['mantenimientos'] = $this->M_Admin->obtener_mantenimientos();
-        $this->load->view('admin/templates/Header');
-        $this->load->view('admin/templates/Navbar');
-        $this->load->view('admin/templates/Sidebar');
-        $this->load->view('admin/Preventivo', $data);
-        $this->load->view('admin/templates/Footer');
+        if ($this->input->server('REQUEST_METHOD') === 'GET') {
+
+            $id = $this->input->get('id');
+            $detalles = $this->M_Admin->obtenerDetallesEquiposFormulario($id);
+            header('Content-Type: application/json');
+            echo json_encode($detalles);
+        }
     }
 
     public function obtenerEquipo()
@@ -113,29 +136,11 @@ class Admin extends CI_Controller
         if ($this->input->server('REQUEST_METHOD') === 'GET') {
             $id = $this->input->get('id');
             $equipo = $this->M_Admin->obtenerEquipoPorId($id);
+            header('Content-Type: application/json');
             echo json_encode($equipo);
         }
     }
 
-    public function asignar_tecnico(){
-
-        if ($this->input->server('REQUEST_METHOD') === 'POST') {
-            $id_cronograma = $this->input->post('id_cronograma');
-            $tecnico_asignado = $this->input->post('tecnico_asignado');
-            $semana_asignada = $this->input->post('semana_asignada');
-
-            $data = array(
-                'usuario_id' => $tecnico_asignado,
-            );
-
-            $this->M_Admin->asignarTecnico($id_cronograma, $data);
-            redirect('Admin/cronograma');
-        }
-
-        
-
-    }
-    
     public function agregarEquipoFormulario()
     {
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
@@ -231,7 +236,7 @@ class Admin extends CI_Controller
         $this->load->view('admin/templates/Navbar');
         $this->load->view('admin/templates/Sidebar');
         $this->load->view('admin/Usuarios.php', $data);
-        $this->load->view('admin/forms/Form-Usuario');
+        $this->load->view('admin/forms/Form_Usuario');
         $this->load->view('admin/templates/Footer');
     }
 
@@ -258,17 +263,6 @@ class Admin extends CI_Controller
 
             // Redirigir a la página principal o a donde sea necesario después de la inserción
             redirect('Admin/usuarios');
-        }
-    }
-
-
-    public function eliminar_usuario()
-    {
-        if ($this->input->server('REQUEST_METHOD') === 'GET') {
-            $id = $this->input->get('id');
-
-            $resp = $this->M_Admin->eliminarUsuario($id);
-            echo  $resp;
         }
     }
 
@@ -302,22 +296,14 @@ class Admin extends CI_Controller
     public function obtenerUsuario()
     {
         if ($this->input->server('REQUEST_METHOD') === 'GET') {
+            // Obtener datos del formulario
             $usuarioiD = $this->input->get('id');
+
             $resp = $this->M_Admin->obtenerUsuarioPorID($usuarioiD);
+
+            header('Content-Type: application/json');
             echo json_encode($resp);
         }
-    }
-
-    public function cronograma()
-    {
-        $data['cronogramas'] = $this->M_Admin->obtenerCronograma();
-        $users['tecnicos'] = $this->M_Admin->obtenerTecnicos();
-        $this->load->view('admin/templates/Header');
-        $this->load->view('admin/templates/Navbar');
-        $this->load->view('admin/templates/Sidebar');
-        $this->load->view('admin/Cronograma', $data);
-        $this->load->view('admin/forms/Form-Asignar', $users);
-        $this->load->view('admin/templates/Footer');
     }
 
     public function ordentrabajo()
@@ -328,8 +314,26 @@ class Admin extends CI_Controller
         $this->load->view('admin/templates/Navbar');
         $this->load->view('admin/templates/Sidebar');
         $this->load->view('admin/OrdenTrabajo', $data);
-        $this->load->view('admin/forms/Form-AsignarTrabajo', $users);
+        $this->load->view('admin/forms/Form_AsignarTrabajo', $users);
         $this->load->view('admin/templates/Footer');
+    }
+
+
+    public function asignar_tecnico()
+    {
+
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $id_cronograma = $this->input->post('id_cronograma');
+            $tecnico_asignado = $this->input->post('tecnico_asignado');
+            $semana_asignada = $this->input->post('semana_asignada');
+
+            $data = array(
+                'usuario_id' => $tecnico_asignado,
+            );
+
+            $this->M_Admin->asignarTecnico($id_cronograma, $data);
+            redirect('Admin/cronograma');
+        }
     }
 
     public function asignar_trabajo()
@@ -345,7 +349,7 @@ class Admin extends CI_Controller
             );
 
             $resp = $this->M_Admin->asignarTrabajo($id_orden, $data);
-            echo  $resp;
+            redirect('Admin/ordentrabajo');
         }
     }
 
@@ -355,21 +359,27 @@ class Admin extends CI_Controller
     public function file_upload()
     {
 
-        $config['upload_path'] =  '/var/www/html/assets/uploads/';
+        $config['upload_path'] =  APPPATH . '../assets/uploads/';
         $config['allowed_types'] = 'xlsx|csv|xls';
         $config['max_size'] = 20480;
         $this->load->library('upload', $config);
         $this->upload->initialize($config);
 
         if (!$this->upload->do_upload('input_File')) {
-            redirect('Admin');
+            // Error al subir el archivo
+            $error = array('error' => $this->upload->display_errors());
+            // Manejar el error como sea necesario (redirigir a una página de error, mostrar mensaje, etc.)
+            redirect("Admin");
         } else {
             // Archivo subido correctamente
             $uploaded_data = $this->upload->data();
-            $file_path = '/var/www/html/assets/uploads/' . $uploaded_data['file_name'];
+            $file_path = APPPATH . '../assets/uploads/' . $uploaded_data['file_name'];
             $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
             $spreadsheet = $reader->load($file_path);
             $sheetData = $spreadsheet->getActiveSheet()->toArray();
+
+
+            echo "<pre>";
             foreach ($sheetData as $row) {
 
                 if (!$this->M_Admin->equipo_existe_por_numero_inventario($row[0])) {
@@ -388,8 +398,77 @@ class Admin extends CI_Controller
                     $this->M_Admin->insertarEquipo($data);
                 }
             }
-
-            redirect('Admin');
+            /* 
+            funCHatGPT($file_path)
+            /* como eliminar un archgiuvos desde php con el path */
+            redirect("Admin");
         }
     }
+
+    public function fichas_tecnicas()
+    {
+        $data['fichas'] = $this->M_Admin->obtener_todas_las_fichas();
+
+
+        $this->load->view('admin/templates/Header');
+        $this->load->view('admin/templates/Navbar');
+        if ($this->session->userdata('Role') == 'Administrador') {
+            $this->load->view('admin/templates/Sidebar');
+        } else {
+            $this->load->view('doctors/templates/Sidebar');
+        }
+
+        $this->load->view('doctors/FichasTecnicas', $data);
+        $this->load->view('doctors/forms/Form_Ficha');
+        $this->load->view('admin/templates/Footer');
+    }
+
+
+    public function preventivo()
+    {
+        $data['mantenimientos'] = $this->M_Admin->obtener_mantenimientos();
+        $this->load->view('admin/templates/Header');
+        $this->load->view('admin/templates/Navbar');
+        $this->load->view('admin/templates/Sidebar');
+        $this->load->view('admin/Preventivo', $data);
+        $this->load->view('admin/templates/Footer');
+    }
+
+
+    public function cronograma()
+    {
+        $data['cronogramas'] = $this->M_Admin->obtenerCronograma();
+        $users['tecnicos'] = $this->M_Admin->obtenerTecnicos();
+        $this->load->view('admin/templates/Header');
+        $this->load->view('admin/templates/Navbar');
+        $this->load->view('admin/templates/Sidebar');
+        $this->load->view('admin/Cronograma', $data);
+        $this->load->view('admin/forms/Form_Asignar', $users);
+        $this->load->view('admin/templates/Footer');
+    }
 }
+
+/* 
+
+	$inputTileType = \PhpOffice\PhpSpreadsheet\IOFactory::identify($inputFileName);
+				$reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputTileType);
+				$spreadsheet = $reader->load($inputFileName);
+				$sheet = $spreadsheet->getSheet(0);
+				$count_Rows = 0;
+				foreach($sheet->getRowIterator() as $row)
+				{
+					$name = $spreadsheet->getActiveSheet()->getCell('A'.$row->getRowIndex());
+					$mobile = $spreadsheet->getActiveSheet()->getCell('B'.$row->getRowIndex());
+					$email = $spreadsheet->getActiveSheet()->getCell('C'.$row->getRowIndex());
+					$address = $spreadsheet->getActiveSheet()->getCell('D'.$row->getRowIndex());
+					$data = array(
+						'name'=> $name,
+						'email'=> $email,
+						'mobile'=> $mobile,
+						'address'=> $address,
+					);
+
+					$this->db->insert('users',$data);
+					$count_Rows++;
+				}
+*/

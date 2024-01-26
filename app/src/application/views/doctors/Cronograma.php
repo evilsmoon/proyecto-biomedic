@@ -8,7 +8,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Admin</a></li>
+                        <li class="breadcrumb-item"><a href="#"><?php echo $this->session->userdata('Role') == 'Técnico' ? 'Técnico' : 'Enfermera'; ?></a></li>
                         <li class="breadcrumb-item active">Cronograma</li>
                     </ol>
                 </div>
@@ -22,8 +22,11 @@
                 <div class="col-12">
                     <div class="card">
 
-                 
-
+                        <div class="card-header">
+                            <a class="btn btn-app" type="button" id="btn-print-cronograma">
+                                <i class="fas fa-save"></i> Save File
+                            </a>
+                        </div>
                         <div class="card-body ">
                             <div class="table-responsive-xl">
                                 <table id='cronograma' class="table table-bordered">
@@ -125,54 +128,54 @@
                                                 <td><?php echo $cronograma->Equipo_ID; ?></td>
                                                 <td><?php echo $cronograma->nombre_equipo; ?></td>
                                                 <td><?php echo $cronograma->nombre_personal; ?></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_1_1 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_1_2 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_1_3 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_1_4 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_2_1 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_2_2 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_2_3 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_2_4 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_3_1 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_3_2 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_3_3 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_3_4 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_4_1 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_4_2 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_4_3 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_4_4 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_5_1 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_5_2 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_5_3 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_5_4 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_6_1 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_6_2 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_6_3 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_6_4 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_7_1 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_7_2 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_7_3 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_7_4 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_8_1 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_8_2 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_8_3 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_8_4 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_9_1 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_9_2 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_9_3 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_9_4 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_10_1 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_10_2 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_10_3 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_10_4 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_11_1 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_11_2 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_11_3 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_11_4 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_12_1 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_12_2 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_12_3 == 0 ? '' : 'checked'; ?>></td>
-                                                <td><input type="checkbox" disabled <?php echo $cronograma->Cuatrimestre_12_4 == 0 ? '' : 'checked'; ?>></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_1_1 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_1_2 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_1_3 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_1_4 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_2_1 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_2_2 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_2_3 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_2_4 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_3_1 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_3_2 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_3_3 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_3_4 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_4_1 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_4_2 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_4_3 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_4_4 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_5_1 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_5_2 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_5_3 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_5_4 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_6_1 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_6_2 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_6_3 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_6_4 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_7_1 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_7_2 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_7_3 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_7_4 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_8_1 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_8_2 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_8_3 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_8_4 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_9_1 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_9_2 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_9_3 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_9_4 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_10_1 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_10_2 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_10_3 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_10_4 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_11_1 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_11_2 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_11_3 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_11_4 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_12_1 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_12_2 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_12_3 == 0 ? '' : 'X'; ?></td>
+                                                <td><?php echo $cronograma->Cuatrimestre_12_4 == 0 ? '' : 'X'; ?></td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>
