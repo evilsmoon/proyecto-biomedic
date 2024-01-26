@@ -253,7 +253,7 @@ class M_Admin extends CI_Model
         $this->db->where('usuarios.id', $id);
         $this->db->select('usuarios.*, , perfiles.nombre as perfil');
         $this->db->from('usuarios');
-        $this->db->join('perfiles', 'perfiles.id = Usuarios.id_perfil ');
+        $this->db->join('perfiles', 'perfiles.id = usuarios.id_perfil ');
         $query = $this->db->get();
         return $query->row();
     }

@@ -176,7 +176,6 @@
     autoWidth: true,
     responsive: false,
     select: true,
-    select: true,
     columnDefs: [{
       data: null,
       defaultContent: "<a class='fas text-primary fa-edit editar-usuario'></a><a class='fas text-primary fa-trash eliminar-usuario'>",
